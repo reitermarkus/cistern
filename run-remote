@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+set -o nounset
+
+ip="${1}"
+
+ssh pi@"${ip}" -t journalctl -f -u cistern.service
