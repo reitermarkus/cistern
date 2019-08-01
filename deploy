@@ -42,6 +42,6 @@ RestartSec=1
 WantedBy=multi-user.target
 CONFIG
 
-ssh pi@"${ip}" sudo cp -f /tmp/cistern/cistern /usr/local/bin/cistern
+ssh pi@"${ip}" sudo mv -f /tmp/cistern/cistern /usr/local/bin/cistern
 ssh pi@"${ip}" sudo systemctl enable cistern
 ssh pi@"${ip}" sudo systemctl restart cistern
