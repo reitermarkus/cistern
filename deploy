@@ -9,7 +9,7 @@ ip="${1}"
 if ssh pi@"${ip}" cat /proc/cpuinfo | grep -q ARMv7; then
   TARGET='armv7-unknown-linux-gnueabihf'
 else
-  TARGET='arm-unknown-linux-gnueabihf'
+  TARGET='arm-unknown-linux-gnueabi'
 fi
 
 cross build --release --features server --target "${TARGET}"
