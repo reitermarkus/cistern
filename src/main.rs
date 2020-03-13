@@ -24,6 +24,8 @@ fn cistern(cistern: State<Arc<RwLock<Cistern<I2cdev>>>>) -> Option<JsonValue> {
 use cistern::Cistern;
 
 fn main() {
+  env_logger::init();
+
   let dev = I2cdev::new(env::var("I2C_DEVICE").expect("I2C_DEVICE is not set")).expect("Failed to open I2C device");
 
   let cistern = Arc::new(RwLock::new(Cistern::new(dev)));
@@ -42,7 +44,7 @@ fn main() {
       }
 
       if let Err(e) = cistern.write().unwrap().measure() {
-        eprintln!("Failed to measure: {:?}", e);
+        log::error!("Failed to measure: {:?}", e);
       }
     }
 
