@@ -19,6 +19,8 @@ end
 desc 'set hostname on Raspberry Pi'
 task :setup_hostname do
   sh 'ssh', HOST, <<~SH
+    set -euo pipefail
+
     if ! dpkg -s dnsutils >/dev/null; then
       sudo apt-get update
       sudo apt-get install -y dnsutils
@@ -40,7 +42,7 @@ task :setup_i2c do
   r, w = IO.pipe
 
   w.puts <<~CFG
-    SUBSYSTEM=="i2c-dev", ATTR{name}=="bcm2835 I2C adapter", SYMLINK+="i2c", TAG+="systemd"
+    SUBSYSTEM=="i2c-dev", DRIVERS=="i2c-bcm2835", SYMLINK+="i2c", TAG+="systemd"
   CFG
   w.close
 
