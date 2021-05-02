@@ -5,20 +5,21 @@ authors = ["Markus Reiter <me@reitermark.us>"]
 edition = "2018"
 
 [dependencies]
-ads1x1x = "*"
-embedded-hal = "*"
-linux-embedded-hal = { version = "*", optional = true }
+ads1x1x = "0.2"
+embedded-hal = "0.2"
+linux-embedded-hal = { version = "0.3", optional = true }
 measurements = "0.10"
 log = "0.4"
-env_logger = "0.7"
-medianheap = "*"
-nb = "*"
-rocket = { version = "0.4", optional = true }
-rocket_contrib = { version = "0.4", default-features = false, features = ["json"], optional = true }
-simple-signal = { version = "1", optional = true }
+env_logger = "0.8"
+medianheap = "0.2"
+nb = "1.0"
+simple-signal = { version = "1.1", optional = true }
+webthing = "0.14"
+serde_json = "1.0"
+actix-rt = { version = "2.2", optional = true }
 
 [features]
-server = ["rocket", "rocket_contrib", "simple-signal", "linux-embedded-hal"]
+server = ["actix-rt", "simple-signal", "linux-embedded-hal"]
 
 [[bin]]
 name = "cistern"

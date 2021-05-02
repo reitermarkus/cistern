@@ -102,8 +102,6 @@ task :deploy => :build do
     Type=simple
     Environment=I2C_DEVICE=/dev/i2c
     Environment=RUST_LOG=info
-    Environment=ROCKET_PORT=80
-    Environment=ROCKET_SECRET_KEY="#{SecureRandom.base64(32)}"
     ExecStart=/usr/local/bin/cistern
     Restart=always
     RestartSec=1

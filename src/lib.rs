@@ -7,6 +7,8 @@ use nb::block;
 use embedded_hal::adc::OneShot;
 use embedded_hal::blocking::i2c::WriteRead;
 use embedded_hal::blocking::i2c::Write;
+use webthing::{BaseThing, Thing, BaseProperty};
+use serde_json::json;
 
 pub struct Cistern<I> {
   heap: MedianHeap<i16>,
@@ -30,10 +32,11 @@ impl<I, E> Cistern<I>
     }
   }
 
-  pub fn measure(&mut self) -> Result<(), ads1x1x::Error<E>> {
+  pub fn measure(&mut self) -> Result<i16, ads1x1x::Error<E>> {
     let value = block!(self.adc.read(&mut channel::SingleA0))?;
     self.heap.push(value);
-    Ok(())
+
+    Ok(self.heap.median().unwrap())
   }
 
   pub fn level(&self) -> Option<(f64, f64, f64)> {
@@ -56,5 +59,66 @@ impl<I, E> Cistern<I>
 
       (height, percent, volume)
     })
+  }
+
+  pub fn to_thing(&self) -> BaseThing {
+    let mut thing = BaseThing::new(
+        "urn:dev:ops:cistern-level-sensor-1234".to_owned(),
+        "Cistern Level Sensor".to_owned(),
+        Some(vec!["MultiLevelSensor".to_owned()]),
+        Some("A web connected cistern level sensor".to_owned()),
+    );
+
+    let level = BaseProperty::new(
+      "percentage".to_owned(),
+      json!(null),
+      None,
+      Some(json!({
+        "@type": "LevelProperty",
+        "title": "Level",
+        "type": "number",
+        "description": "The current fill level in percent",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "percent",
+        "readOnly": true
+      }).as_object().unwrap().clone()),
+    );
+    let height = BaseProperty::new(
+      "height".to_owned(),
+      json!(null),
+      None,
+      Some(json!({
+        "@type": "LevelProperty",
+        "title": "Height",
+        "type": "number",
+        "description": "The current fill height in centimeters",
+        "minimum": 0,
+        "maximum": Self::MAX_WATER_LEVEL,
+        "unit": "centimeter",
+        "readOnly": true
+      }).as_object().unwrap().clone()),
+    );
+    let volume = BaseProperty::new(
+      "volume".to_owned(),
+      json!(null),
+      None,
+      Some(json!({
+        "@type": "LevelProperty",
+        "title": "Volume",
+        "type": "number",
+        "description": "The current fill volume in liters",
+        "minimum": 0,
+        "maximum": Self::MAX_VOLUME,
+        "unit": "liter",
+        "readOnly": true
+      }).as_object().unwrap().clone()),
+    );
+
+    thing.add_property(Box::new(level));
+    thing.add_property(Box::new(height));
+    thing.add_property(Box::new(volume));
+
+    thing
   }
 }
