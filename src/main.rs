@@ -83,7 +83,7 @@ async fn main() -> std::io::Result<()> {
 
   let mut server = WebThingServer::new(
       ThingsType::Single(thing_clone),
-      None,
+      Some(8888),
       None,
       None,
       Box::new(Generator),
