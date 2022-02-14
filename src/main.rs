@@ -83,12 +83,12 @@ async fn main() -> std::io::Result<()> {
 
   let mut server = WebThingServer::new(
       ThingsType::Single(thing_clone),
-      Some(8888),
+      Some(env::var("PORT").map(|p| p.parse::<u16>().expect("Failed to parse PORT")).unwrap_or(8888)),
       None,
       None,
       Box::new(Generator),
       None,
-      None,
+      Some(true),
   );
 
   server.start(None).await
