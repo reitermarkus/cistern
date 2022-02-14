@@ -1,0 +1,9 @@
+all:
+  hosts:
+    cistern:
+      ansible_user: pi
+      ansible_host: cistern.local
+  children:
+    raspberry_pi:
+      hosts:
+        cistern:

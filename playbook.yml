@@ -1,0 +1,72 @@
+- name: Set up Raspberry Pi
+  hosts: raspberry_pi
+  become: yes
+  tasks:
+    - name: Install requirements
+      local_action: command ansible-galaxy install -r requirements.yml
+      become: no
+      tags:
+        - setup
+    - name: Setup
+      import_role:
+        name: reitermarkus.raspberry_pi.setup
+      vars:
+        timezone: Europe/Vienna
+        watchdog: on
+        i2c: on
+    - name: Build program
+      local_action: command cargo install --bin cistern --features=server --path . --root target
+      become: no
+    - name: Install program
+      copy:
+        src: target/bin/cistern
+        dest: /usr/local/bin/cistern
+        mode: 0755
+    - name: Enable systemd-networkd-wait-online service
+      systemd:
+        name: systemd-networkd-wait-online
+        enabled: yes
+    - name: Set I2C path
+      set_fact:
+        i2c_dev: /dev/i2c-1
+    - name: Set up I2C udev rule
+      copy:
+        content: |
+          SUBSYSTEM=="i2c-dev", TAG+="systemd"
+        dest: /etc/udev/rules.d/99-i2c.rules
+      register: i2c_rules
+    - name: Reload udev rules
+      when: i2c_rules.changed
+      shell: udevadm control --reload-rules && udevadm trigger
+    - name: Get I2C dependency
+      command: systemd-escape --path --suffix=device {{ i2c_dev }}
+      register: i2c_dep
+      changed_when: false
+    - name: Install service
+      copy:
+        content: |
+          [Unit]
+          Description=cistern
+          After=network-online.target
+          Wants=network-online.target
+          BindsTo={{ i2c_dep.stdout }}
+          After={{ i2c_dep.stdout }}
+
+          [Service]
+          Type=simple
+          Environment=I2C_DEVICE={{ i2c_dev }}
+          Environment=RUST_LOG=info
+          Environment=PORT=80
+          ExecStart=/usr/local/bin/cistern
+          Restart=always
+          RestartSec=1
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/cistern.service
+    - name: Enable service
+      systemd:
+        daemon_reload: true
+        name: cistern
+        enabled: yes
+        state: restarted
