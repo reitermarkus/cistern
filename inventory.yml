@@ -2,7 +2,7 @@ all:
   hosts:
     cistern:
       ansible_user: pi
-      ansible_host: cistern.local
+      ansible_host: cistern
   children:
     raspberry_pi:
       hosts:
