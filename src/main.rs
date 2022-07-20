@@ -1,5 +1,3 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
 use std::env;
 use std::sync::{mpsc::channel, Arc, RwLock};
 use std::thread;
