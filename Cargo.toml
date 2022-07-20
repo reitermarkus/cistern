@@ -9,7 +9,7 @@ publish = false
 ads1x1x = "0.2"
 embedded-hal = "0.2"
 linux-embedded-hal = { version = "0.3", optional = true }
-measurements = "0.10"
+measurements = "0.11"
 log = "0.4"
 env_logger = "0.9"
 medianheap = "0.2"
