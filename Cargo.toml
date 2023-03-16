@@ -13,7 +13,7 @@ measurements = "0.11"
 log = "0.4"
 env_logger = "0.9"
 medianheap = "0.3"
-nb = "1.0"
+nb = "1.1"
 simple-signal = { version = "1.1", optional = true }
 webthing = "0.15"
 serde_json = "1.0"
