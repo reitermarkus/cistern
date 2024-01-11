@@ -1002,12 +1002,11 @@ dependencies = [
 
 [[package]]
 name = "medianheap"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8c1c59a22d2c99783267adda8a0fb6833efc21ca6b8da534a0a56beedee0724b"
+checksum = "3ca19217bb773c33ab417de98b61264d55073268395b990f9201e68d18a4d1f5"
 dependencies = [
  "min-max-heap",
- "ordered-float",
 ]
 
 [[package]]
@@ -1138,15 +1137,6 @@ name = "once_cell"
 version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "18a6dbe30758c9f83eb00cbea4ac95966305f5a7772f3f42ebfc7fc7eddbd8e1"
-
-[[package]]
-name = "ordered-float"
-version = "2.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7940cf2ca942593318d07fcf2596cdca60a85c9e7fab408a5e21a4f9dcd40d87"
-dependencies = [
- "num-traits",
-]
 
 [[package]]
 name = "parking_lot"
