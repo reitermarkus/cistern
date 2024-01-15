@@ -2,25 +2,26 @@
 name = "cistern"
 version = "0.1.0"
 authors = ["Markus Reiter <me@reitermark.us>"]
-edition = "2018"
+edition = "2021"
 publish = false
 
 [dependencies]
-ads1x1x = "0.2"
-embedded-hal = "0.2"
-linux-embedded-hal = { version = "0.3", optional = true }
+ads1x1x = "0.3"
+embedded-hal = "1"
+linux-embedded-hal = { version = "0.4", optional = true }
 measurements = "0.11"
+nb = "1"
 log = "0.4"
 env_logger = "0.9"
-medianheap = "0.3"
-nb = "1.0"
-simple-signal = { version = "1.1", optional = true }
+medianheap = "0.4"
 webthing = "0.15"
-serde_json = "1.0"
+serde_json = "1"
 actix-rt = { version = "2.7", optional = true }
+tokio = { version = "1", features = ["macros", "net", "rt-multi-thread"] }
+anyhow = "1"
 
 [features]
-server = ["actix-rt", "simple-signal", "linux-embedded-hal"]
+server = ["actix-rt", "linux-embedded-hal"]
 
 [[bin]]
 name = "cistern"
@@ -29,3 +30,7 @@ required-features = ["server"]
 
 [lib]
 name = "cistern"
+
+[patch.crates-io]
+ads1x1x = { git = "https://github.com/reitermarkus/ads1x1x-rs", branch = "embedded-hal-1" }
+# ads1x1x = { path = "../ads1x1x-rs" }
