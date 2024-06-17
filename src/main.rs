@@ -1,19 +1,19 @@
-use std::env;
-use std::sync::{Arc, RwLock};
+use std::{
+  env,
+  sync::{Arc, RwLock},
+};
 
+use anyhow::Context;
 use linux_embedded_hal::I2cdev;
 use serde_json::json;
-use webthing::{Thing, ThingsType, BaseActionGenerator, WebThingServer};
-use anyhow::Context;
-use tokio::{task, sync::oneshot};
+use tokio::{sync::oneshot, task};
+use webthing::{BaseActionGenerator, Thing, ThingsType, WebThingServer};
 
 use cistern::Cistern;
 
 #[actix_rt::main]
 async fn main() -> anyhow::Result<()> {
   env_logger::init();
-
-  println!("YOLO");
 
   println!("RUST_LOG={}", env::var("RUST_LOG").unwrap_or_default());
 
@@ -36,7 +36,7 @@ async fn main() -> anyhow::Result<()> {
       loop {
         if measurement_loop_stop_rx.try_recv().unwrap_or(false) {
           log::info!("Stopping measurement loop.");
-          break Ok(())
+          break Ok(());
         }
 
         let mut cistern = cistern.write().await;
@@ -68,7 +68,9 @@ async fn main() -> anyhow::Result<()> {
 
         tokio::task::yield_now().await;
       }
-    }).await.context("Failed to start measurement loop")
+    })
+    .await
+    .context("Failed to start measurement loop")
   };
 
   let webthing_server = async {
