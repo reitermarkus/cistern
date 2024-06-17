@@ -5,7 +5,7 @@ use anyhow::Context;
 use linux_embedded_hal::I2cdev;
 use serde_json::json;
 use tokio::{sync::oneshot, task};
-use webthing::{Thing, ThingsType, BaseActionGenerator, WebThingServer};
+use webthing::{BaseActionGenerator, Thing, ThingsType, WebThingServer};
 
 use cistern::Cistern;
 
