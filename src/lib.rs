@@ -36,21 +36,15 @@ where
 
   pub fn level(&self) -> Option<(f64, f64, f64)> {
     self.heap.median_with(|v1, v2| (v1 + v2) / 2).map(|value| {
-      let adjusted_value = if value < 0 {
-        0
-      } else {
-        i32::from(value) * 6_144 / (2i32.pow(15) - 1)
-      };
+      let adjusted_value = 
+        if value < 0 { 0 } else { i32::from(value) * 6_144 / (2i32.pow(15) - 1) };
 
       // Measurement range is 0-5 V for 5 m, so 1 mV is exactly 1 mm.
       let height = Length::from_millimeters(adjusted_value as f64);
 
       let height = height.as_centimeters();
-      let percent = if height > f64::from(Self::MAX_WATER_LEVEL) {
-        1.0
-      } else {
-        height / f64::from(Self::MAX_WATER_LEVEL)
-      };
+      let percent = 
+        if height > f64::from(Self::MAX_WATER_LEVEL) { 1.0 } else { height / f64::from(Self::MAX_WATER_LEVEL) };
       let volume = f64::from(Self::MAX_VOLUME) * percent;
 
       (height, percent, volume)
@@ -82,7 +76,7 @@ where
         })
         .as_object()
         .unwrap()
-        .clone()
+        .clone(),
       ),
     );
     let height = BaseProperty::new(
@@ -121,7 +115,7 @@ where
         })
         .as_object()
         .unwrap()
-        .clone()
+        .clone(),
       ),
     );
 
