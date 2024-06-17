@@ -1,5 +1,7 @@
-use std::env;
-use std::sync::{Arc, RwLock};
+use std::{
+  env,
+  sync::{Arc, RwLock},
+};
 
 use anyhow::Context;
 use linux_embedded_hal::I2cdev;
