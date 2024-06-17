@@ -13,9 +13,10 @@ pub struct Cistern<I> {
 }
 
 impl<I, E> Cistern<I>
-  where
-    I: I2c<Error = E>,
-    E: std::fmt::Debug {
+where
+  I: I2c<Error = E>,
+  E: std::fmt::Debug
+{
   const MAX_WATER_LEVEL: u16 = 156 - 21; // This is the height of the drain pipe.
   const MAX_VOLUME: u16 = 1600;
 
@@ -23,10 +24,7 @@ impl<I, E> Cistern<I>
     let mut adc = Ads1115::new(i2c, Default::default());
     adc.set_full_scale_range(Within6_144V).expect("Failed to set voltage range");
 
-    Self {
-      heap: MedianHeap::with_max_size(10000),
-      adc,
-    }
+    Self { heap: MedianHeap::with_max_size(10000), adc }
   }
 
   pub fn measure(&mut self) -> Result<Median<&i16>, E> {
