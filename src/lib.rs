@@ -1,10 +1,9 @@
-use ads1x1x::{FullScaleRange::Within6_144V, ChannelSelection};
-use ads1x1x::{Ads1115};
+use ads1x1x::{Ads1115, ChannelSelection, FullScaleRange::Within6_144V};
 use measurements::Length;
 use medianheap::{Median, MedianHeap};
 use nb::block;
 use embedded_hal::i2c::I2c;
-use webthing::{BaseThing, Thing, BaseProperty};
+use webthing::{BaseProperty, BaseThing, Thing};
 use serde_json::json;
 
 pub struct Cistern<I> {
