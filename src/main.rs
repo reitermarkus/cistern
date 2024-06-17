@@ -1,11 +1,11 @@
 use std::env;
 use std::sync::{Arc, RwLock};
 
+use anyhow::Context;
 use linux_embedded_hal::I2cdev;
 use serde_json::json;
+use tokio::{sync::oneshot, task};
 use webthing::{Thing, ThingsType, BaseActionGenerator, WebThingServer};
-use anyhow::Context;
-use tokio::{task, sync::oneshot};
 
 use cistern::Cistern;
 
