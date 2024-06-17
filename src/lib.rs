@@ -69,55 +69,60 @@ where
       "percentage".to_owned(),
       json!(null),
       None,
-      Some(json!({
-        "@type": "LevelProperty",
-        "title": "Level",
-        "type": "number",
-        "description": "The current fill level in percent",
-        "minimum": 0,
-        "maximum": 100,
-        "unit": "percent",
-        "readOnly": true
-      })
-      .as_object()
-      .unwrap()
-      .clone()),
+      Some(
+        json!({
+          "@type": "LevelProperty",
+          "title": "Level",
+          "type": "number",
+          "description": "The current fill level in percent",
+          "minimum": 0,
+          "maximum": 100,
+          "unit": "percent",
+          "readOnly": true
+        })
+        .as_object()
+        .unwrap()
+        .clone()
+      ),
     );
     let height = BaseProperty::new(
       "height".to_owned(),
       json!(null),
       None,
-      Some(json!({
-        "@type": "LevelProperty",
-        "title": "Height",
-        "type": "number",
-        "description": "The current fill height in centimeters",
-        "minimum": 0,
-        "maximum": Self::MAX_WATER_LEVEL,
-        "unit": "centimeter",
-        "readOnly": true
-      })
-      .as_object()
-      .unwrap()
-      .clone()),
+      Some(
+        json!({
+          "@type": "LevelProperty",
+          "title": "Height",
+          "type": "number",
+          "description": "The current fill height in centimeters",
+          "minimum": 0,
+          "maximum": Self::MAX_WATER_LEVEL,
+          "unit": "centimeter",
+          "readOnly": true
+        })
+        .as_object()
+        .unwrap()
+        .clone()),
     );
     let volume = BaseProperty::new(
       "volume".to_owned(),
       json!(null),
       None,
-      Some(json!({
-        "@type": "LevelProperty",
-        "title": "Volume",
-        "type": "number",
-        "description": "The current fill volume in liters",
-        "minimum": 0,
-        "maximum": Self::MAX_VOLUME,
-        "unit": "liter",
-        "readOnly": true
-      })
-      .as_object()
-      .unwrap()
-      .clone()),
+      Some(
+        json!({
+          "@type": "LevelProperty",
+          "title": "Volume",
+          "type": "number",
+          "description": "The current fill volume in liters",
+          "minimum": 0,
+          "maximum": Self::MAX_VOLUME,
+          "unit": "liter",
+          "readOnly": true
+        })
+        .as_object()
+        .unwrap()
+        .clone()
+      ),
     );
 
     thing.add_property(Box::new(level));
