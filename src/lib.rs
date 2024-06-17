@@ -59,10 +59,10 @@ where
 
   pub fn to_thing(&self) -> BaseThing {
     let mut thing = BaseThing::new(
-        "urn:dev:ops:cistern-level-sensor-1234".to_owned(),
-        "Cistern Level Sensor".to_owned(),
-        Some(vec!["MultiLevelSensor".to_owned()]),
-        Some("A web connected cistern level sensor".to_owned()),
+      "urn:dev:ops:cistern-level-sensor-1234".to_owned(),
+      "Cistern Level Sensor".to_owned(),
+      Some(vec!["MultiLevelSensor".to_owned()]),
+      Some("A web connected cistern level sensor".to_owned()),
     );
 
     let level = BaseProperty::new(
@@ -78,7 +78,10 @@ where
         "maximum": 100,
         "unit": "percent",
         "readOnly": true
-      }).as_object().unwrap().clone()),
+      })
+      .as_object()
+      .unwrap()
+      .clone()),
     );
     let height = BaseProperty::new(
       "height".to_owned(),
@@ -93,7 +96,10 @@ where
         "maximum": Self::MAX_WATER_LEVEL,
         "unit": "centimeter",
         "readOnly": true
-      }).as_object().unwrap().clone()),
+      })
+      .as_object()
+      .unwrap()
+      .clone()),
     );
     let volume = BaseProperty::new(
       "volume".to_owned(),
@@ -108,7 +114,10 @@ where
         "maximum": Self::MAX_VOLUME,
         "unit": "liter",
         "readOnly": true
-      }).as_object().unwrap().clone()),
+      })
+      .as_object()
+      .unwrap()
+      .clone()),
     );
 
     thing.add_property(Box::new(level));
