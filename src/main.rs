@@ -13,8 +13,6 @@ use cistern::Cistern;
 async fn main() -> anyhow::Result<()> {
   env_logger::init();
 
-  println!("YOLO");
-
   println!("RUST_LOG={}", env::var("RUST_LOG").unwrap_or_default());
 
   let i2c_device = env::var("I2C_DEVICE").context("I2C_DEVICE is not set")?;
@@ -36,7 +34,7 @@ async fn main() -> anyhow::Result<()> {
       loop {
         if measurement_loop_stop_rx.try_recv().unwrap_or(false) {
           log::info!("Stopping measurement loop.");
-          break Ok(())
+          break Ok(());
         }
 
         let mut cistern = cistern.write().await;
@@ -68,7 +66,9 @@ async fn main() -> anyhow::Result<()> {
 
         tokio::task::yield_now().await;
       }
-    }).await.context("Failed to start measurement loop")
+    })
+    .await
+    .context("Failed to start measurement loop")
   };
 
   let webthing_server = async {
