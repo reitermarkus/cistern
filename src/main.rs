@@ -15,8 +15,6 @@ use cistern::Cistern;
 async fn main() -> anyhow::Result<()> {
   env_logger::init();
 
-  println!("RUST_LOG={}", env::var("RUST_LOG").unwrap_or_default());
-
   let i2c_device = env::var("I2C_DEVICE").context("I2C_DEVICE is not set")?;
   let i2c = I2cdev::new(i2c_device).context("Failed to open I2C device")?;
   let cistern = Cistern::new(i2c);
