@@ -1,4 +1,4 @@
-use ads1x1x::{Ads1115, ChannelSelection, FullScaleRange::Within6_144V};
+use ads1x1x::{channel, Ads1115, FullScaleRange::Within6_144V};
 use embedded_hal::i2c::I2c;
 use measurements::Length;
 use medianheap::{Median, MedianHeap};
@@ -27,7 +27,7 @@ where
   }
 
   pub fn measure(&mut self) -> Result<Median<&i16>, E> {
-    let value = block!(self.adc.read(ChannelSelection::SingleA0))?;
+    let value = block!(self.adc.read(channel::SingleA0))?;
     self.heap.push(value);
 
     Ok(self.heap.median().unwrap())
