@@ -6,7 +6,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
-ads1x1x = "0.3"
+ads1x1x = "0.2"
 embedded-hal = "1"
 linux-embedded-hal = { version = "0.4", optional = true }
 measurements = "0.11"
@@ -32,5 +32,5 @@ required-features = ["server"]
 name = "cistern"
 
 [patch.crates-io]
-ads1x1x = { git = "https://github.com/reitermarkus/ads1x1x-rs", branch = "embedded-hal-1" }
+ads1x1x = { git = "https://github.com/reitermarkus/ads1x1x-rs", branch = "split-api" }
 # ads1x1x = { path = "../ads1x1x-rs" }
