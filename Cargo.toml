@@ -6,7 +6,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
-ads1x1x = "0.2"
+ads1x1x = "0.3"
 embedded-hal = "1"
 linux-embedded-hal = { version = "0.4", optional = true }
 measurements = "0.11"
